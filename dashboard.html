@@ -198,6 +198,58 @@
 
 <div id="toast">복사 완료!</div>
 
+<!-- ABOUT 모달 -->
+<div id="aboutOverlay" onclick="if(event.target===this)closeAbout()" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(30,32,60,0.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
+  <div style="background:#fff;border-radius:22px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.18);animation:modalIn .22s cubic-bezier(.4,0,.2,1)">
+    <div style="padding:20px 24px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#fff;z-index:10;border-radius:22px 22px 0 0">
+      <span style="font-size:1.6rem">🐶</span>
+      <span style="font-size:1.05rem;font-weight:900;flex:1">사이트 소개</span>
+      <button onclick="closeAbout()" style="background:none;border:none;cursor:pointer;font-size:1.3rem;color:#9ca3af;padding:4px 8px;border-radius:8px">✕</button>
+    </div>
+    <div style="padding:22px">
+      <!-- 히어로 -->
+      <div style="text-align:center;padding:10px 0 22px">
+        <div style="font-size:3rem;margin-bottom:10px">🐶</div>
+        <div style="font-size:1.35rem;font-weight:900;color:var(--primary);margin-bottom:6px">다 모아 JUNE</div>
+        <div style="font-size:0.92rem;color:var(--sub)">일상과 업무에 필요한 도구를 빠르고 편리하게</div>
+      </div>
+      <!-- 소개 -->
+      <div style="background:var(--primary-light);border-radius:14px;padding:20px 22px;margin-bottom:14px">
+        <div style="font-size:0.95rem;font-weight:900;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:4px;height:1rem;background:var(--primary);border-radius:4px"></span>소개</div>
+        <p style="font-size:0.9rem;color:var(--sub);line-height:1.8"><b style="color:var(--text)">다 모아 JUNE</b>은 계산기, 변환기, 생성기 등 <b style="color:var(--text)">일상과 업무에 자주 필요한 웹 도구</b>를 한곳에 모아 제공하는 무료 서비스입니다.<br><br>복잡한 앱 설치 없이 브라우저에서 바로 사용할 수 있도록 만들었습니다. 회원가입 없이, 누구나 편하게 쓸 수 있는 도구를 지향합니다.</p>
+      </div>
+      <!-- 제공 도구 -->
+      <div style="background:#f5f6fa;border-radius:14px;padding:20px 22px;margin-bottom:14px">
+        <div style="font-size:0.95rem;font-weight:900;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:4px;height:1rem;background:var(--primary);border-radius:4px"></span>제공 도구 <span style="font-size:0.82rem;font-weight:700;color:var(--primary);background:var(--primary-light);padding:2px 10px;border-radius:50px">24개</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+          ${['⌨️ 특수문자·이모지','📏 글자 수 계산기','📅 날짜/D-Day','🏢 영업일 계산기','🌍 타임존 변환기','📐 단위 변환기','🎨 색상 코드 변환기','🗜️ 이미지 압축','📷 QR 코드 생성기','🧮 일반 계산기','💵 시급 환산기','💰 복리 계산기','📉 물타기 계산기','🔥 칼로리 계산기','🎤 발표시간 계산기','🤖 AI 프롬프트 자판기','💬 빠른 답장 도구','⭐ 별자리 계산기','🐉 띠 계산기','💸 구독료 계산기','🔗 UTM 생성기','📄 PDF 도구','🫨 이모지 합치기','✂️ URL 줄이기'].map(function(t){return '<div style="background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:8px 12px;font-size:0.82rem;font-weight:700;color:var(--primary)">'+t+'</div>';}).join('')}
+        </div>
+      </div>
+      <!-- 특징 -->
+      <div style="background:#f5f6fa;border-radius:14px;padding:20px 22px;margin-bottom:14px">
+        <div style="font-size:0.95rem;font-weight:900;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:4px;height:1rem;background:var(--primary);border-radius:4px"></span>특징</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+          <div style="background:#fff;border-radius:12px;padding:16px"><div style="font-size:1.4rem;margin-bottom:7px">🆓</div><div style="font-size:0.88rem;font-weight:800;margin-bottom:5px">무료 & 회원가입 불필요</div><div style="font-size:0.8rem;color:var(--sub);line-height:1.6">모든 도구는 무료로 사용 가능하며, 로그인 없이 바로 이용할 수 있어요.</div></div>
+          <div style="background:#fff;border-radius:12px;padding:16px"><div style="font-size:1.4rem;margin-bottom:7px">🔒</div><div style="font-size:0.88rem;font-weight:800;margin-bottom:5px">로컬 처리</div><div style="font-size:0.8rem;color:var(--sub);line-height:1.6">입력한 데이터가 외부 서버로 전송되지 않아요.</div></div>
+          <div style="background:#fff;border-radius:12px;padding:16px"><div style="font-size:1.4rem;margin-bottom:7px">📱</div><div style="font-size:0.88rem;font-weight:800;margin-bottom:5px">모바일 최적화</div><div style="font-size:0.8rem;color:var(--sub);line-height:1.6">PC와 모바일 어디서든 편리하게 사용할 수 있어요.</div></div>
+        </div>
+      </div>
+      <!-- 문의 -->
+      <div style="background:var(--primary-light);border-radius:14px;padding:20px 22px">
+        <div style="font-size:0.95rem;font-weight:900;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:4px;height:1rem;background:var(--primary);border-radius:4px"></span>문의 및 피드백</div>
+        <p style="font-size:0.88rem;color:var(--sub);margin-bottom:14px">새로운 도구 요청, 버그 신고, 개선 의견 등 어떤 피드백이든 환영해요!</p>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:14px 16px">
+          <div style="font-size:1.3rem">📸</div>
+          <div>
+            <div style="font-size:0.78rem;color:var(--sub);font-weight:600;margin-bottom:2px">Instagram DM</div>
+            <a href="https://www.instagram.com/zzuwlsni/" target="_blank" style="font-size:0.93rem;font-weight:800;color:var(--primary);text-decoration:none">@zzuwlsni</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ════════════════════════════════
 // CLOCK
@@ -478,7 +530,18 @@ function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeModal(); closeAbout(); } });
+
+function openAbout() {
+  var ol = document.getElementById('aboutOverlay');
+  ol.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeAbout() {
+  var ol = document.getElementById('aboutOverlay');
+  ol.style.display = 'none';
+  document.body.style.overflow = '';
+}
 
 function showToast(msg) {
   var t = document.getElementById('toast');

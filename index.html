@@ -165,7 +165,7 @@
 
 <header>
   <div class="header-inner">
-    <a class="logo" href="#">🐶 다 모아 JUNE</a>
+    <a class="logo" href="index.html">🐶 다 모아 JUNE</a>
     <div class="search-wrap">
       <span class="ico">🔍</span>
       <input type="text" id="searchInput" placeholder="도구 검색...">
@@ -173,6 +173,10 @@
     <div class="tabs">
       <button class="tab-btn active" onclick="setView('card')">카드</button>
       <button class="tab-btn" onclick="setView('category')">카테고리</button>
+    </div>
+    <div style="display:flex;gap:6px;flex-shrink:0;border-left:1.5px solid var(--border);padding-left:12px;margin-left:4px;">
+      <a class="tab-btn active" href="index.html" style="text-decoration:none">도구 모음</a>
+      <a class="tab-btn" href="dashboard.html" style="text-decoration:none">대시보드</a>
     </div>
   </div>
 </header>
@@ -214,7 +218,7 @@
 </footer>
 
 <!-- ABOUT 모달 -->
-<div class="modal-overlay" id="aboutOverlay" onclick="if(event.target===this)closeAbout()" style="display:none;align-items:center;justify-content:center;padding:16px;">
+<div id="aboutOverlay" onclick="if(event.target===this)closeAbout()" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(30,32,60,0.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
   <div class="modal" style="max-width:700px;">
     <div class="modal-header">
       <span class="mico">🐶</span>
