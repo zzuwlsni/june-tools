@@ -27,6 +27,9 @@
   .nav-btn { padding: 6px 14px; border-radius: 50px; border: 1.5px solid var(--border); font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #fff; color: var(--sub); text-decoration: none; transition: .15s; }
   .nav-btn:hover, .nav-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
   .clock-badge { font-size: 0.82rem; color: var(--sub); font-weight: 700; padding: 5px 12px; background: var(--bg); border-radius: 50px; border: 1.5px solid var(--border); white-space: nowrap; }
+  .date-info-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .day-badge { font-size: 0.73rem; color: var(--primary); font-weight: 700; padding: 3px 10px; background: var(--primary-light); border-radius: 50px; border: 1.5px solid #c7d3ff; white-space: nowrap; }
+  .days-left-badge { font-size: 0.73rem; color: #10b981; font-weight: 700; padding: 3px 10px; background: #ecfdf5; border-radius: 50px; border: 1.5px solid #6ee7b7; white-space: nowrap; }
 
   /* GRID */
   .dashboard { max-width: 1400px; margin: 0 auto; padding: 20px 16px 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; flex: 1; }
@@ -131,13 +134,20 @@
 
 <header>
   <div class="header-inner">
-    <a class="logo" href="index.html">🐶 다 모아 JUNE</a>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <a class="logo" href="index.html">🐶 다 모아 JUNE</a>
+      <a href="https://www.instagram.com/zzuwlsni/" target="_blank" style="font-size:0.82rem;font-weight:700;color:var(--sub);text-decoration:none;padding-left:1px;transition:.15s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--sub)'">📸 @zzuwlsni</a>
+    </div>
     <div class="nav-links">
       <a class="nav-btn" href="index.html">도구 모음</a>
       <a class="nav-btn active" href="dashboard.html">대시보드</a>
       <a class="nav-btn" href="#" onclick="openAbout();return false;">소개</a>
     </div>
-    <div class="clock-badge" id="headerClock">--:--:--</div>
+    <div class="date-info-wrap">
+      <div class="clock-badge" id="headerClock">--:--:--</div>
+      <div class="day-badge" id="headerDayOfYear">2026년 ---번째 날</div>
+      <div class="days-left-badge" id="headerDaysLeft">올해 ---일 남음</div>
+    </div>
   </div>
 </header>
 
@@ -155,20 +165,7 @@
     </div>
   </div>
 
-  <!-- ══ PANEL 2: 자료실 ══ -->
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-dot" style="background:var(--primary)"></div>
-      <div class="panel-title">June의 자료실</div>
-      <div class="panel-sub">클릭해서 펼치기</div>
-    </div>
-    <div class="panel-body">
-      <div id="folderList"></div>
-      <button class="add-folder-btn" onclick="addFolder()">+ 폴더 추가</button>
-    </div>
-  </div>
-
-  <!-- ══ PANEL 3: 도구 모음 ══ -->
+  <!-- ══ PANEL 2: 도구 모음 ══ -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-dot" style="background:#10b981"></div>
@@ -179,6 +176,19 @@
       <input class="tool-search" type="text" id="toolSearch" placeholder="🔍  도구 검색..." oninput="renderToolGrid()">
       <div class="tool-grid" id="toolGrid"></div>
       <button class="tool-more" onclick="window.open('index.html','_blank')">전체 도구 모음 열기 →</button>
+    </div>
+  </div>
+
+  <!-- ══ PANEL 3: 자료실 ══ -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-dot" style="background:var(--primary)"></div>
+      <div class="panel-title">June의 자료실</div>
+      <div class="panel-sub">클릭해서 펼치기</div>
+    </div>
+    <div class="panel-body">
+      <div id="folderList"></div>
+      <button class="add-folder-btn" onclick="addFolder()">+ 폴더 추가</button>
     </div>
   </div>
 
@@ -277,6 +287,16 @@
 // ════════════════════════════════
 // CLOCK
 // ════════════════════════════════
+function getDayOfYear(d) {
+  var start = new Date(d.getFullYear(), 0, 0);
+  var diff = d - start + (start.getTimezoneOffset() - d.getTimezoneOffset()) * 60 * 1000;
+  return Math.floor(diff / 86400000);
+}
+function getDaysLeft(d) {
+  var endOfYear = new Date(d.getFullYear(), 11, 31);
+  var diff = endOfYear - d;
+  return Math.ceil(diff / 86400000);
+}
 function tickClock() {
   var now = new Date();
   var h = String(now.getHours()).padStart(2,'0');
@@ -284,6 +304,10 @@ function tickClock() {
   var s = String(now.getSeconds()).padStart(2,'0');
   var el = document.getElementById('headerClock');
   if (el) el.textContent = h + ':' + m + ':' + s;
+  var dayEl = document.getElementById('headerDayOfYear');
+  if (dayEl) dayEl.textContent = now.getFullYear() + '년 ' + getDayOfYear(now) + '번째 날';
+  var leftEl = document.getElementById('headerDaysLeft');
+  if (leftEl) leftEl.textContent = '올해 ' + getDaysLeft(now) + '일 남음';
 }
 tickClock();
 setInterval(tickClock, 1000);
@@ -293,8 +317,8 @@ setInterval(tickClock, 1000);
 // ════════════════════════════════
 async function loadFinance() {
   try {
-    // 환율 (frankfurter.app — 무료·무키·CORS 지원)
-    var rateRes = await fetch('https://api.frankfurter.app/latest?from=USD&to=KRW,JPY,EUR,CNY,GBP');
+    // 환율 (frankfurter.dev — 무료·무키·CORS 지원, 구 .app에서 도메인 변경)
+    var rateRes = await fetch('https://api.frankfurter.dev/v1/latest?base=USD&symbols=KRW,JPY,EUR,CNY,GBP');
     var rateData = await rateRes.json();
     var rates = rateData.rates;
 
@@ -389,6 +413,7 @@ var DEFAULT_FOLDERS = [
   { name: '주식 / 코인', icon: '📁', items: [
     { type: 'link', name: '네이버 증권', url: 'https://finance.naver.com' },
     { type: 'link', name: '업비트', url: 'https://upbit.com' },
+    { type: 'link', name: '바이낸스', url: 'https://www.binance.com/ko' },
   ]},
   { name: '기타 자료', icon: '📁', items: [] },
 ];
@@ -397,6 +422,21 @@ function getFolders() {
   try { return JSON.parse(localStorage.getItem('june_folders') || 'null') || DEFAULT_FOLDERS; } catch(e) { return DEFAULT_FOLDERS; }
 }
 function saveFolders(f) { try { localStorage.setItem('june_folders', JSON.stringify(f)); } catch(e) {} }
+
+// 기존 저장 데이터에 바이낸스 자동 추가 마이그레이션
+(function migrateBinance() {
+  try {
+    var folders = JSON.parse(localStorage.getItem('june_folders') || 'null');
+    if (!folders) return;
+    var coinFolder = folders.find(function(f){ return f.name === '주식 / 코인'; });
+    if (!coinFolder) return;
+    var hasBinance = coinFolder.items.some(function(i){ return i.url && i.url.includes('binance.com'); });
+    if (!hasBinance) {
+      coinFolder.items.push({ type: 'link', name: '바이낸스', url: 'https://www.binance.com/ko' });
+      localStorage.setItem('june_folders', JSON.stringify(folders));
+    }
+  } catch(e) {}
+})();
 
 function renderFolders() {
   var folders = getFolders();
