@@ -146,14 +146,34 @@
   .clock-info { font-size: 0.78rem; color: var(--text-sub); }
 
   @media(max-width:600px) {
-    .hero h1 { font-size:1.25rem; }
-    .tools-grid { grid-template-columns:1fr 1fr; gap:10px; }
-    .modal { border-radius:16px; }
-    .color-codes { grid-template-columns:1fr 1fr; }
-    .header-inner { gap:10px; }
-    .clock-card { padding: 14px 18px; gap:10px; flex-wrap:wrap; }
+    /* 헤더 */
+    header { padding: 0 12px; }
+    .header-inner { flex-wrap: wrap; gap: 8px; padding: 10px 0; }
+    .logo { font-size: 1rem; }
+    .search-wrap { order: 3; width: 100%; flex: none; }
+    .header-tabs { order: 4; width: 100%; justify-content: center; gap: 4px; }
+    .tab-btn { padding: 5px 11px; font-size: 0.78rem; }
+
+    /* 공지바 */
+    .notice-bar { font-size: 0.8rem; padding: 8px 12px; }
+
+    /* 히어로 */
+    .hero h1 { font-size: 1.25rem; }
+
+    /* 날짜 위젯 */
+    .clock-card { padding: 14px 18px; gap: 10px; flex-wrap: wrap; }
     .clock-time { font-size: 1.4rem; }
     .clock-right { align-items: flex-start; }
+
+    /* 도구 카드 그리드 */
+    .tools-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* 모달 — 아래서 올라오게 */
+    .modal { border-radius: 16px 16px 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; max-height: 85vh; margin: 0; }
+    .modal-overlay { align-items: flex-end; padding: 0; }
+
+    /* 기타 */
+    .color-codes { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -237,7 +257,7 @@
       <!-- 소개 -->
       <div style="background:var(--primary-light);border-radius:14px;padding:20px 22px;margin-bottom:16px">
         <div style="font-size:0.95rem;font-weight:900;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:4px;height:1rem;background:var(--primary);border-radius:4px"></span>소개</div>
-        <p style="font-size:0.9rem;color:var(--text-sub);line-height:1.8"><b style="color:var(--text)">다 모아 JUNE</b>은 계산기, 변환기, 생성기 등 <b style="color:var(--text)">일상과 업무에 자주 필요한 웹 도구</b>를 한곳에 모아 제공하는 무료 서비스입니다.<br><br>복잡한 앱 설치 없이 브라우저에서 바로 사용할 수 있도록 만들었습니다. 회원가입 없이, 누구나 편하게 쓸 수 있는 도구를 지향합니다.</p>
+        <p style="font-size:0.9rem;color:var(--text-sub);line-height:1.8"><b style="color:var(--text)">다 모아 JUNE</b>은 계산기, 글자수 세기 등 <b style="color:var(--text)">일상과 업무에 자주 필요한 웹 도구</b>는 물론, 실시간 환율·코인 시세 같은 <b style="color:var(--text)">금융 정보</b>와 자주 쓰는 <b style="color:var(--text)">링크·자료</b>를 한곳에 모아 제공하는 무료 서비스입니다.<br><br>복잡한 앱 설치 없이 브라우저에서 바로 사용할 수 있도록 만들었습니다.<br>회원가입 없이, 누구나 편하게 쓸 수 있는 도구를 지향합니다.</p>
       </div>
 
       <!-- 제공 도구 -->
