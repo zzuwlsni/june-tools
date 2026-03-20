@@ -141,10 +141,7 @@
     .logo { font-size: 1rem; }
     .nav-links { order: 3; width: 100%; justify-content: center; gap: 4px; }
     .nav-btn { padding: 5px 11px; font-size: 0.78rem; }
-    .date-info-wrap { order: 2; flex-direction: row; align-items: center; gap: 6px; margin-left: auto; }
-    .clock-badge { font-size: 0.75rem; padding: 4px 9px; }
-    .day-badge { font-size: 0.7rem; padding: 3px 8px; }
-    .days-left-badge { display: none; }
+    .date-info-wrap { border-left: none; padding: 2px 0; margin-left: 0; }
 
     /* 대시보드 패널 */
     .dashboard { padding: 12px 10px 30px; gap: 12px; }
@@ -182,11 +179,10 @@
       <a class="nav-btn" href="index.html">도구 모음</a>
       <a class="nav-btn active" href="dashboard.html">대시보드</a>
       <a class="nav-btn" href="#" onclick="openAbout();return false;">소개</a>
-    </div>
-    <div class="date-info-wrap">
-      <div class="clock-badge" id="headerClock">--:--:--</div>
-      <div class="day-badge" id="headerDayOfYear">2026년 ---번째 날</div>
-      <div class="days-left-badge" id="headerDaysLeft">올해 ---일 남음</div>
+      <div class="date-info-wrap">
+        <div style="font-size:0.7rem;color:var(--sub);font-weight:700;white-space:nowrap;">⏰ 현재시간 &nbsp;<span class="clock-badge" id="headerClock" style="border:none;background:none;padding:0;font-size:0.82rem;color:var(--text);">--:--:--</span></div>
+        <div style="font-size:0.7rem;color:var(--sub);font-weight:700;white-space:nowrap;"><span id="headerDayOfYear">---번째 날</span> &nbsp;·&nbsp; <span id="headerDaysLeft" style="color:#10b981;">---일 남음</span></div>
+      </div>
     </div>
   </div>
 </header>
