@@ -224,19 +224,6 @@
     </div>
   </div>
 
-  <!-- ══ PANEL 3: 자료실 ══ -->
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-dot" style="background:var(--primary)"></div>
-      <div class="panel-title">June의 자료실</div>
-      <div class="panel-sub">클릭해서 펼치기</div>
-    </div>
-    <div class="panel-body">
-      <div id="folderList"></div>
-      <button class="add-folder-btn" onclick="addFolder()">+ 폴더 추가</button>
-    </div>
-  </div>
-
   <!-- ══ PANEL 4: 달력 + 할일 ══ -->
   <div class="panel">
     <div class="panel-header">
@@ -244,30 +231,53 @@
       <div class="panel-title">📅 달력 & 할일</div>
       <div class="panel-sub" id="calMonthLabel"></div>
     </div>
-    <div class="panel-body" style="padding:12px 14px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <button onclick="changeMonth(-1)" style="border:none;background:none;font-size:1.2rem;cursor:pointer;color:var(--sub);padding:2px 8px">‹</button>
-        <div id="calTitle" style="font-size:0.9rem;font-weight:900;color:var(--text)"></div>
-        <button onclick="changeMonth(1)" style="border:none;background:none;font-size:1.2rem;cursor:pointer;color:var(--sub);padding:2px 8px">›</button>
+    <div class="panel-body" style="padding:14px 16px;display:flex;flex-direction:column;gap:0">
+
+      <!-- 달력 헤더 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <button onclick="changeMonth(-1)" style="border:none;background:var(--bg);border-radius:8px;font-size:1.3rem;cursor:pointer;color:var(--sub);padding:4px 12px;transition:.15s" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--bg)'">‹</button>
+        <div id="calTitle" style="font-size:1rem;font-weight:900;color:var(--text)"></div>
+        <button onclick="changeMonth(1)" style="border:none;background:var(--bg);border-radius:8px;font-size:1.3rem;cursor:pointer;color:var(--sub);padding:4px 12px;transition:.15s" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--bg)'">›</button>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px">
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:#ef4444">일</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:var(--sub)">월</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:var(--sub)">화</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:var(--sub)">수</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:var(--sub)">목</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:var(--sub)">금</div>
-        <div style="text-align:center;font-size:0.68rem;font-weight:800;color:#3b82f6">토</div>
+
+      <!-- 요일 헤더 -->
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:5px">
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:#ef4444;padding:4px 0">일</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:var(--sub);padding:4px 0">월</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:var(--sub);padding:4px 0">화</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:var(--sub);padding:4px 0">수</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:var(--sub);padding:4px 0">목</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:var(--sub);padding:4px 0">금</div>
+        <div style="text-align:center;font-size:0.75rem;font-weight:800;color:#3b82f6;padding:4px 0">토</div>
       </div>
-      <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
-      <div id="todoSection" style="margin-top:12px;border-top:1.5px solid var(--border);padding-top:10px;display:none">
-        <div style="font-size:0.82rem;font-weight:900;color:var(--text);margin-bottom:7px" id="todoDateLabel"></div>
-        <div style="display:flex;gap:6px;margin-bottom:8px">
-          <input type="text" id="todoInput" placeholder="할일 입력..." style="flex:1;padding:7px 10px;font-size:0.82rem;border:1.5px solid var(--border);border-radius:8px;outline:none;font-family:inherit" onkeydown="if(event.key==='Enter')addTodo()">
-          <button onclick="addTodo()" style="padding:7px 12px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;flex-shrink:0">+</button>
+
+      <!-- 달력 그리드 -->
+      <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+
+      <!-- 항상 보이는 할일 + 메모 영역 -->
+      <div style="margin-top:14px;border-top:1.5px solid var(--border);padding-top:12px">
+        <div style="font-size:0.85rem;font-weight:900;color:var(--text);margin-bottom:9px" id="todoDateLabel">날짜를 선택하세요</div>
+
+        <!-- 할일 입력 -->
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <input type="text" id="todoInput" placeholder="할일 입력..." style="flex:1;padding:8px 11px;font-size:0.82rem;border:1.5px solid var(--border);border-radius:8px;outline:none;font-family:inherit" onkeydown="if(event.key==='Enter')addTodo()">
+          <button onclick="addTodo()" style="padding:8px 13px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer;flex-shrink:0">+</button>
         </div>
-        <div id="todoList"></div>
+        <div id="todoList" style="margin-bottom:14px"></div>
+
+        <!-- 스티커 메모 -->
+        <div style="background:#fef9c3;border-radius:12px;padding:12px 14px;border:1.5px solid #fde68a;box-shadow:2px 3px 8px rgba(0,0,0,0.08)">
+          <div style="font-size:0.72rem;font-weight:800;color:#92400e;margin-bottom:8px">📝 메모</div>
+          <textarea id="stickyMemo" rows="3" placeholder="메모를 입력하고 추가 버튼을 눌러주세요..." style="width:100%;background:transparent;border:none;outline:none;font-size:0.85rem;color:#713f12;line-height:1.7;resize:none;font-family:'Pretendard','Noto Sans KR',sans-serif;"></textarea>
+          <div style="display:flex;justify-content:flex-end;gap:5px;margin-top:6px;border-top:1px solid #fde68a;padding-top:8px">
+            <button onclick="addMemo()" style="padding:3px 11px;background:#f59e0b;color:#fff;border:none;border-radius:6px;font-size:0.72rem;font-weight:700;cursor:pointer">+ 추가</button>
+            <button onclick="saveMemoText()" style="padding:3px 11px;background:#fff;color:#92400e;border:1px solid #fde68a;border-radius:6px;font-size:0.72rem;font-weight:700;cursor:pointer">저장</button>
+          </div>
+        </div>
+        <!-- 저장된 메모 목록 -->
+        <div id="memoList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
       </div>
+
     </div>
   </div>
 
@@ -360,6 +370,20 @@
       </div>
     </div>
   </div>
+
+  <!-- ══ PANEL 4: 자료실 ══ -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-dot" style="background:var(--primary)"></div>
+      <div class="panel-title">June의 자료실</div>
+      <div class="panel-sub">클릭해서 펼치기</div>
+    </div>
+    <div class="panel-body">
+      <div id="folderList"></div>
+      <button class="add-folder-btn" onclick="addFolder()">+ 폴더 추가</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -374,12 +398,13 @@ function initCalendar() {
   calMonth = now.getMonth();
   calSelectedDate = null;
   renderCalendar();
+  renderTodos();
 }
 
 function changeMonth(dir) {
   calMonth += dir;
   if (calMonth > 11) { calMonth = 0; calYear++; }
-  if (calMonth < 0) { calMonth = 11; calYear--; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
   renderCalendar();
 }
 
@@ -387,70 +412,140 @@ function renderCalendar() {
   var months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   var title = document.getElementById('calTitle');
   if (title) title.textContent = calYear + '년 ' + months[calMonth];
-
   var grid = document.getElementById('calGrid');
   if (!grid) return;
-
   var firstDay = new Date(calYear, calMonth, 1).getDay();
   var lastDate = new Date(calYear, calMonth + 1, 0).getDate();
   var today = new Date();
   var todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
-
-  var html = '';
+  grid.innerHTML = '';
   for (var i = 0; i < firstDay; i++) {
-    html += '<div></div>';
+    var empty = document.createElement('div');
+    empty.style.minHeight = '52px';
+    grid.appendChild(empty);
   }
   for (var d = 1; d <= lastDate; d++) {
-    var dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    var todos = getTodos(dateStr);
-    var hasTodo = todos.length > 0;
-    var isToday = dateStr === todayStr;
-    var isSelected = dateStr === calSelectedDate;
-    var dayOfWeek = (firstDay + d - 1) % 7;
-    var color = dayOfWeek === 0 ? '#ef4444' : dayOfWeek === 6 ? '#3b82f6' : 'var(--text)';
-
-    var bg = isSelected ? 'var(--primary)' : isToday ? 'var(--primary-light)' : 'none';
-    var textColor = isSelected ? '#fff' : color;
-    var border = isToday && !isSelected ? '1.5px solid var(--primary)' : '1.5px solid transparent';
-
-    html += '<div onclick="selectDate(\'' + dateStr + '\')" style="text-align:center;padding:4px 2px;border-radius:8px;cursor:pointer;background:' + bg + ';border:' + border + ';position:relative;transition:.12s">';
-    html += '<div style="font-size:0.78rem;font-weight:' + (isToday||isSelected?'900':'600') + ';color:' + textColor + '">' + d + '</div>';
-    if (hasTodo) {
-      var done = todos.filter(function(t){return t.done;}).length;
-      html += '<div style="font-size:0.55rem;color:' + (isSelected?'#fff':'var(--primary)') + ';font-weight:800;line-height:1">' + done + '/' + todos.length + '</div>';
-    }
-    html += '</div>';
+    (function(day) {
+      var dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+      var todos   = getTodos(dateStr);
+      var isToday = dateStr === todayStr;
+      var isSel   = dateStr === calSelectedDate;
+      var dow     = (firstDay + day - 1) % 7;
+      var cell    = document.createElement('div');
+      cell.style.cssText = 'min-height:52px;border-radius:9px;cursor:pointer;padding:5px 4px 4px;transition:.12s;overflow:hidden;border:1.5px solid ' + (isSel ? 'var(--primary)' : isToday ? 'var(--primary)' : 'var(--border)') + ';background:' + (isSel ? 'var(--primary)' : isToday ? 'var(--primary-light)' : '#fafbfc') + ';';
+      cell.onmouseover = function() { if (!isSel) this.style.background = 'var(--primary-light)'; };
+      cell.onmouseout  = function() { if (!isSel) this.style.background = isToday ? 'var(--primary-light)' : '#fafbfc'; };
+      cell.onclick = function() { selectDate(dateStr); };
+      var numDiv = document.createElement('div');
+      numDiv.style.cssText = 'font-size:0.82rem;font-weight:' + (isToday||isSel?'900':'700') + ';color:' + (isSel?'#fff':dow===0?'#ef4444':dow===6?'#3b82f6':'var(--text)') + ';text-align:center;margin-bottom:2px;';
+      numDiv.textContent = day;
+      cell.appendChild(numDiv);
+      var previewCount = Math.min(todos.length, 2);
+      for (var ti = 0; ti < previewCount; ti++) {
+        var t = todos[ti];
+        var tDiv = document.createElement('div');
+        tDiv.style.cssText = 'font-size:0.6rem;background:' + (isSel?'rgba(255,255,255,0.25)':'var(--primary-light)') + ';color:' + (isSel?'#fff':'var(--primary)') + ';border-radius:3px;padding:1px 3px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;' + (t.done?'text-decoration:line-through;opacity:0.6':'');
+        tDiv.textContent = t.text;
+        cell.appendChild(tDiv);
+      }
+      if (todos.length > 2) {
+        var more = document.createElement('div');
+        more.style.cssText = 'font-size:0.58rem;color:' + (isSel?'rgba(255,255,255,0.8)':'var(--sub)') + ';text-align:center;';
+        more.textContent = '+' + (todos.length-2) + '개';
+        cell.appendChild(more);
+      }
+      grid.appendChild(cell);
+    })(d);
   }
-  grid.innerHTML = html;
 }
 
 function selectDate(dateStr) {
   calSelectedDate = dateStr;
   renderCalendar();
-  var section = document.getElementById('todoSection');
   var label = document.getElementById('todoDateLabel');
-  if (section) section.style.display = '';
   if (label) {
-    var parts = dateStr.split('-');
-    label.textContent = parts[0] + '년 ' + parseInt(parts[1]) + '월 ' + parseInt(parts[2]) + '일 할일';
+    var p = dateStr.split('-');
+    label.textContent = p[0] + '년 ' + parseInt(p[1]) + '월 ' + parseInt(p[2]) + '일';
   }
   renderTodos();
+  var memo = document.getElementById('stickyMemo');
+  if (memo) memo.value = localStorage.getItem('june_memo_draft_' + dateStr) || '';
+  renderMemos();
 }
 
 function getTodos(dateStr) {
   try { return JSON.parse(localStorage.getItem('june_todo_' + dateStr) || '[]'); } catch(e) { return []; }
 }
-function saveTodos(dateStr, todos) {
-  try { localStorage.setItem('june_todo_' + dateStr, JSON.stringify(todos)); } catch(e) {} }
+function saveTodosData(dateStr, todos) {
+  try { localStorage.setItem('june_todo_' + dateStr, JSON.stringify(todos)); } catch(e) {}
+}
+
+function getMemos(dateStr) {
+  try { return JSON.parse(localStorage.getItem('june_memos_' + dateStr) || '[]'); } catch(e) { return []; }
+}
+function saveMemos(dateStr, memos) {
+  try { localStorage.setItem('june_memos_' + dateStr, JSON.stringify(memos)); } catch(e) {}
+}
+function saveMemoText() {
+  if (!calSelectedDate) { showToast('날짜를 먼저 선택해주세요!'); return; }
+  var ta = document.getElementById('stickyMemo');
+  if (!ta || !ta.value.trim()) { showToast('메모 내용을 입력해주세요!'); return; }
+  localStorage.setItem('june_memo_draft_' + calSelectedDate, ta.value);
+  showToast('메모가 저장됐어요!');
+}
+function clearMemoText() {
+  var ta = document.getElementById('stickyMemo');
+  if (ta) { ta.value = ''; localStorage.removeItem('june_memo_draft_' + calSelectedDate); showToast('메모가 삭제됐어요!'); }
+}
+function addMemo() {
+  if (!calSelectedDate) { showToast('날짜를 먼저 선택해주세요!'); return; }
+  var ta = document.getElementById('stickyMemo');
+  var text = ta ? ta.value.trim() : '';
+  if (!text) { showToast('메모 내용을 입력해주세요!'); return; }
+  var memos = getMemos(calSelectedDate);
+  memos.push({ text: text, time: new Date().toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit'}) });
+  saveMemos(calSelectedDate, memos);
+  ta.value = '';
+  renderMemos();
+  showToast('메모가 추가됐어요!');
+}
+function deleteMemo(idx) {
+  if (!calSelectedDate) return;
+  var memos = getMemos(calSelectedDate);
+  memos.splice(idx, 1);
+  saveMemos(calSelectedDate, memos);
+  renderMemos();
+  showToast('메모가 삭제됐어요!');
+}
+function renderMemos() {
+  var list = document.getElementById('memoList');
+  if (!list || !calSelectedDate) return;
+  var memos = getMemos(calSelectedDate);
+  if (!memos.length) { list.innerHTML = ''; return; }
+  var html = '';
+  for (var i = 0; i < memos.length; i++) {
+    var m = memos[i];
+    html += '<div style="background:#fef9c3;border:1.5px solid #fde68a;border-radius:10px;padding:10px 12px 10px 12px;margin-bottom:6px">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">';
+    html += '<div>';
+    html += '<div style="font-size:0.7rem;color:#92400e;font-weight:700;margin-bottom:4px;opacity:0.7">' + m.time + '</div>';
+    html += '<div style="font-size:0.85rem;color:#713f12;line-height:1.6;white-space:pre-wrap;word-break:break-all">' + m.text + '</div>';
+    html += '</div>';
+    html += '<button onclick="deleteMemo(' + i + ')" style="flex-shrink:0;border:none;background:none;cursor:pointer;color:#d97706;font-size:0.85rem;padding:2px 5px;border-radius:5px;font-weight:700">✕</button>';
+    html += '</div>';
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
 
 function addTodo() {
-  if (!calSelectedDate) return;
+  if (!calSelectedDate) { showToast('날짜를 먼저 선택해주세요!'); return; }
   var input = document.getElementById('todoInput');
   var text = input.value.trim();
   if (!text) return;
   var todos = getTodos(calSelectedDate);
   todos.push({ text: text, done: false });
-  saveTodos(calSelectedDate, todos);
+  saveTodosData(calSelectedDate, todos);
   input.value = '';
   renderTodos();
   renderCalendar();
@@ -460,7 +555,7 @@ function toggleTodo(idx) {
   if (!calSelectedDate) return;
   var todos = getTodos(calSelectedDate);
   todos[idx].done = !todos[idx].done;
-  saveTodos(calSelectedDate, todos);
+  saveTodosData(calSelectedDate, todos);
   renderTodos();
   renderCalendar();
 }
@@ -469,25 +564,29 @@ function deleteTodo(idx) {
   if (!calSelectedDate) return;
   var todos = getTodos(calSelectedDate);
   todos.splice(idx, 1);
-  saveTodos(calSelectedDate, todos);
+  saveTodosData(calSelectedDate, todos);
   renderTodos();
   renderCalendar();
 }
 
 function renderTodos() {
   var list = document.getElementById('todoList');
-  if (!list || !calSelectedDate) return;
+  if (!list) return;
+  if (!calSelectedDate) {
+    list.innerHTML = '<div style="font-size:0.82rem;color:var(--sub);padding:4px 0">날짜를 클릭하면 할일을 추가할 수 있어요 📅</div>';
+    return;
+  }
   var todos = getTodos(calSelectedDate);
   if (!todos.length) {
     list.innerHTML = '<div style="font-size:0.82rem;color:var(--sub);padding:4px 0">할일이 없어요 😊</div>';
     return;
   }
   list.innerHTML = todos.map(function(t, i) {
-    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">'
-      + '<div onclick="toggleTodo(' + i + ')" style="width:18px;height:18px;border-radius:5px;border:2px solid ' + (t.done ? 'var(--primary)' : 'var(--border)') + ';background:' + (t.done ? 'var(--primary)' : '#fff') + ';cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">'
-      + (t.done ? '<span style="color:#fff;font-size:0.7rem;font-weight:900">✓</span>' : '') + '</div>'
-      + '<span style="flex:1;font-size:0.82rem;' + (t.done ? 'text-decoration:line-through;color:var(--sub)' : 'color:var(--text)') + '">' + t.text + '</span>'
-      + '<button onclick="deleteTodo(' + i + ')" style="border:none;background:none;cursor:pointer;color:#d1d5db;font-size:0.85rem;padding:0 2px;flex-shrink:0">✕</button>'
+    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">'
+      + '<div onclick="toggleTodo(' + i + ')" style="width:20px;height:20px;border-radius:6px;border:2px solid ' + (t.done?'var(--primary)':'var(--border)') + ';background:' + (t.done?'var(--primary)':'#fff') + ';cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s">'
+      + (t.done?'<span style="color:#fff;font-size:0.75rem;font-weight:900">✓</span>':'') + '</div>'
+      + '<span style="flex:1;font-size:0.85rem;' + (t.done?'text-decoration:line-through;color:var(--sub)':'color:var(--text)') + '">' + t.text + '</span>'
+      + '<button onclick="deleteTodo(' + i + ')" style="border:none;background:none;cursor:pointer;color:#d1d5db;font-size:0.9rem;padding:0 2px;flex-shrink:0">✕</button>'
       + '</div>';
   }).join('');
 }
